@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ask2784.kharcharecord">
    <application
-        android:label="kharcharecord"
+        android:label="Kharcha Record"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
