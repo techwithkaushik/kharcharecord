@@ -54,6 +54,7 @@ class _LoginMobileState extends State<LoginMobile> {
               const Text(
                 "Phone Authentication",
                 style: TextStyle(
+                  fontWeight: FontWeight.bold,
                   color: Colors.black,
                   fontSize: 24,
                 ),
@@ -121,7 +122,13 @@ class _LoginMobileState extends State<LoginMobile> {
                   suffixIcon: phoneController.text.length < 10
                       ? null
                       : IconButton(
-                          onPressed: () => Get.toNamed("/loginOTP"),
+                          onPressed: () => Get.toNamed(
+                                "/loginOTP",
+                                parameters: {
+                                  "phone":
+                                      "${selectedCountry.phoneCode}${phoneController.text}",
+                                },
+                              ),
                           icon: const Icon(
                             Icons.arrow_forward,
                             color: Colors.green,
@@ -129,9 +136,6 @@ class _LoginMobileState extends State<LoginMobile> {
                 ),
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              ),
-              const SizedBox(
-                height: 20,
               ),
             ],
           ),
