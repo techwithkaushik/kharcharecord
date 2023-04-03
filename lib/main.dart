@@ -18,12 +18,6 @@ class App extends StatelessWidget {
       title: "Kharcha Record",
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.black,
-            foregroundColor: Colors.white,
-          ),
-        ),
         primarySwatch: Colors.cyan,
         useMaterial3: true,
       ),

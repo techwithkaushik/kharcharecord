@@ -55,7 +55,7 @@ class _LoginMobileState extends State<LoginMobile> {
                 "Phone Authentication",
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: 24,
                 ),
               ),
               const SizedBox(
@@ -71,68 +71,64 @@ class _LoginMobileState extends State<LoginMobile> {
               const SizedBox(
                 height: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 30, right: 30),
-                child: TextFormField(
-                  controller: phoneController,
-                  onChanged: (value) {
-                    setState(() {});
-                  },
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  maxLength: 10,
-                  decoration: InputDecoration(
-                    counter: Text(
-                      "${phoneController.text.length}",
-                      style: TextStyle(
-                        color: counterColor,
-                      ),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    hintText: "Enter Mobile Number!",
-                    prefixIcon: Container(
-                      width: 90,
-                      alignment: Alignment.centerRight,
-                      padding: const EdgeInsets.only(left: 8, right: 8),
-                      child: InkWell(
-                        onTap: () {
-                          showCountryPicker(
-                            context: context,
-                            countryListTheme: const CountryListThemeData(
-                              bottomSheetHeight: 600,
-                            ),
-                            onSelect: (value) {
-                              setState(() {
-                                selectedCountry = value;
-                              });
-                            },
-                          );
-                        },
-                        child: Text(
-                          "${selectedCountry.flagEmoji} +${selectedCountry.phoneCode}",
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    suffixIcon: phoneController.text.length < 10
-                        ? null
-                        : IconButton(
-                            onPressed: () => Get.toNamed("/loginOTP"),
-                            icon: const Icon(
-                              Icons.arrow_forward,
-                              color: Colors.green,
-                            )),
-                  ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              TextField(
+                controller: phoneController,
+                onChanged: (value) {
+                  setState(() {});
+                },
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
+                maxLength: 10,
+                decoration: InputDecoration(
+                  counter: Text(
+                    "${phoneController.text.length}",
+                    style: TextStyle(
+                      color: counterColor,
+                    ),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  hintText: "Enter Mobile Number",
+                  prefixIcon: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: Colors.black,
+                    ),
+                    onPressed: () {
+                      showCountryPicker(
+                        context: context,
+                        countryListTheme: const CountryListThemeData(
+                          bottomSheetHeight: 550,
+                        ),
+                        onSelect: (value) {
+                          setState(() {
+                            selectedCountry = value;
+                          });
+                        },
+                      );
+                    },
+                    child: Text(
+                      "${selectedCountry.flagEmoji} +${selectedCountry.phoneCode}",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  suffixIcon: phoneController.text.length < 10
+                      ? null
+                      : IconButton(
+                          onPressed: () => Get.toNamed("/loginOTP"),
+                          icon: const Icon(
+                            Icons.arrow_forward,
+                            color: Colors.green,
+                          )),
+                ),
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
               const SizedBox(
                 height: 20,

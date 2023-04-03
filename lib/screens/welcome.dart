@@ -22,6 +22,10 @@ class WelcomeScreen extends StatelessWidget {
               height: 200,
             ),
             TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.white,
+              ),
               onPressed: () => Get.toNamed("/loginMobile"),
               child: const Text("Login Now"),
             )

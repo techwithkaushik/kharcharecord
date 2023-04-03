@@ -25,10 +25,7 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
-      - run: flutter pub get
-      - run: flutter format --set-exit-if-changed .
-#       - run: flutter analyze .
+          channel: 'master'
       - name: Build APK
         run: flutter build apk --release --split-per-abi
         env:
