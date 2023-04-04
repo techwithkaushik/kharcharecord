@@ -1,7 +1,7 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
+import 'package:kharcharecord/controllers/auth_controllers.dart';
 
 class LoginMobile extends StatefulWidget {
   const LoginMobile({super.key});
@@ -25,23 +25,50 @@ class _LoginMobileState extends State<LoginMobile> {
       displayNameNoCountryCode: "IN",
       e164Key: '');
   Color counterColor = Colors.red;
+  bool isLoading = false;
+  Widget? showArrow;
 
   @override
   Widget build(BuildContext context) {
-    if (phoneController.text.length < 6) {
+    if (phoneController.text.length == 10) {
       setState(() {
-        counterColor = Colors.red;
-      });
-    } else if (phoneController.text.length < 10) {
-      setState(() {
-        counterColor = Colors.orange;
+        counterColor = Colors.green.shade700;
+        if (isLoading) {
+          showArrow = Container(
+            padding: const EdgeInsets.all(10),
+            height: 20,
+            width: 20,
+            child: const CircularProgressIndicator(
+              color: Colors.black,
+            ),
+          );
+        } else {
+          showArrow = IconButton(
+            onPressed: () async {
+              if (!isLoading) {
+                setState(() {
+                  isLoading = true;
+                });
+              }
+              await AuthController.instance.signInWithPhone(
+                "+${selectedCountry.phoneCode}${phoneController.text}",
+              );
+            },
+            icon: const Icon(
+              Icons.arrow_forward,
+              color: Colors.green,
+            ),
+          );
+        }
       });
     } else {
       setState(() {
-        counterColor = Colors.green.shade700;
+        counterColor = Colors.red;
+        showArrow = null;
       });
     }
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -75,7 +102,11 @@ class _LoginMobileState extends State<LoginMobile> {
               TextField(
                 controller: phoneController,
                 onChanged: (value) {
-                  setState(() {});
+                  setState(() {
+                    if (value.length < 10) {
+                      isLoading = false;
+                    }
+                  });
                 },
                 style: const TextStyle(
                   fontSize: 20,
@@ -119,20 +150,7 @@ class _LoginMobileState extends State<LoginMobile> {
                       ),
                     ),
                   ),
-                  suffixIcon: phoneController.text.length < 10
-                      ? null
-                      : IconButton(
-                          onPressed: () => Get.toNamed(
-                                "/loginOTP",
-                                parameters: {
-                                  "phone":
-                                      "${selectedCountry.phoneCode}${phoneController.text}",
-                                },
-                              ),
-                          icon: const Icon(
-                            Icons.arrow_forward,
-                            color: Colors.green,
-                          )),
+                  suffixIcon: showArrow,
                 ),
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
