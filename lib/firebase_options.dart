@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyC00gmafFqrhwI8bd8ZAMFbqYpnWHThqzk',
-    appId: '1:161906400746:web:79b3713f2944d071d4a693',
+    appId: '1:161906400746:web:5addfeb3fe758275d4a693',
     messagingSenderId: '161906400746',
     projectId: 'management-65319',
     authDomain: 'management-65319.firebaseapp.com',
@@ -60,7 +60,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCRAF7piuxAkMY8eN_dZRxyYgO7fL5fBZs',
-    appId: '1:161906400746:android:82187d90a0d421f2d4a693',
+    appId: '1:161906400746:android:425d0788c12f8bc8d4a693',
     messagingSenderId: '161906400746',
     projectId: 'management-65319',
     storageBucket: 'management-65319.appspot.com',
