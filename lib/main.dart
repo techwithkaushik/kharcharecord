@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kharcharecord/controllers/auth_controllers.dart';
+import 'package:kharcharecord/firebase_options.dart';
 import 'package:kharcharecord/screens/home.dart';
 import 'package:kharcharecord/screens/login_otp.dart';
 import 'package:kharcharecord/screens/welcome.dart';
@@ -11,7 +11,8 @@ import 'screens/login_mobile.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp().then(
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+      .then(
     (value) => Get.put(AuthController()),
   );
   runApp(const App());
