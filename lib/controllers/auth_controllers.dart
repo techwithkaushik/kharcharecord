@@ -9,6 +9,10 @@ class AuthController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
+  final _isPhoneLoading = false.obs;
+
+  bool get isPhoneLoading => _isPhoneLoading.value;
+
   @override
   void onReady() {
     super.onReady();
@@ -28,14 +32,20 @@ class AuthController extends GetxController {
   int? resendToken = 0;
 
   Future<void> signInWithPhone(String? phoneNumber) async {
+    _isPhoneLoading.value = true;
     try {
       await _auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
-        verificationCompleted: (phoneAuthCredential) async =>
-            await _auth.signInWithCredential(phoneAuthCredential),
-        verificationFailed: (error) =>
-            showSnackBar(title: "Verification Failed", message: '$error'),
+        verificationCompleted: (phoneAuthCredential) async {
+          await _auth.signInWithCredential(phoneAuthCredential);
+          _isPhoneLoading.value = false;
+        },
+        verificationFailed: (error) {
+          _isPhoneLoading.value = false;
+          showSnackBar(title: "Verification Failed", message: '$error');
+        },
         codeSent: (verificationId, forceResendingToken) {
+          _isPhoneLoading.value = false;
           resendToken = forceResendingToken;
           Get.toNamed(
             "/otp",
@@ -46,12 +56,16 @@ class AuthController extends GetxController {
           );
         },
         forceResendingToken: resendToken,
-        codeAutoRetrievalTimeout: (verificationId) {},
+        codeAutoRetrievalTimeout: (verificationId) {
+          _isPhoneLoading.value = false;
+        },
         timeout: const Duration(minutes: 1),
       );
     } on FirebaseAuthException catch (e) {
+      _isPhoneLoading.value = false;
       showSnackBar(title: "SignIn Error", message: e.toString());
     } catch (e) {
+      _isPhoneLoading.value = false;
       showSnackBar(title: "SignIn Catch", message: e.toString());
     }
   }
